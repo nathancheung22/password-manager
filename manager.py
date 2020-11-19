@@ -63,5 +63,3 @@ while selection != "q":
         options[selection](passwordDict, f)
     except KeyError:
         print("\nError: Invalid selection\n")
-
-print("\nThanks for using urvianoob's Password Manager v1.0!\n")

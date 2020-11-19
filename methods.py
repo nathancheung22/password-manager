@@ -111,7 +111,7 @@ def listApps(passwordDict, f):
 
 
 def quit(passwordDict, f):
-    exit()
+    print("\nThanks for using urvianoob's Password Manager v1.0!\n")
 
 
 def getFernetKey(password):

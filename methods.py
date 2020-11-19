@@ -7,6 +7,9 @@ from cryptography.fernet import Fernet
 import base64
 import json
 import pyperclip
+import os
+
+__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 
 def getAndConfirmPassword():
@@ -25,7 +28,7 @@ def updateFile(passwordDict, f):
     jsonString = json.dumps(passwordDict).encode()
     encrypted = f.encrypt(jsonString)
 
-    with open("definitelyNotWhereYourPasswordsAreStored.json", "wb") as file:
+    with open(os.path.join(__location__, "definitelyNotWhereYourPasswordsAreStored.json"), "wb") as file:
         file.write(encrypted)
 
 
@@ -98,7 +101,7 @@ def copyPassword(passwordDict, f):
 
 
 def listApps(passwordDict, f):
-    apps = "\n".join([app for app in passwordDict.keys()])
+    apps = "\n        ".join([app for app in passwordDict.keys()])
 
     print("""
         --------------- APPS ---------------

@@ -1,14 +1,17 @@
 import bcrypt
 from getpass import getpass
+import os
+
+__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 # shameless plug
 print("\nurvianoob's Password Manager v1.0\n")
 
 try:
     # if you have these files, then you've already run the setup
-    with open("password.txt", "rb") as f:
+    with open(os.path.join(__location__, "password.txt"), "rb") as f:
         f.read()
-    with open("definitelyNotWhereYourPasswordsAreStored.json", "rb") as f:
+    with open(os.path.join(__location__, "definitelyNotWhereYourPasswordsAreStored.json"), "rb") as f:
         f.read()
 
     print("Error: you've already setup the password-manager\n")
@@ -30,8 +33,8 @@ except FileNotFoundError:
 
     x = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
 
-    with open("password.txt", "wb") as f:
+    with open(os.path.join(__location__, "password.txt"), "wb") as f:
         f.write(x)
 
-    with open("definitelyNotWhereYourPasswordsAreStored.json", "wb") as f:
+    with open(os.path.join(__location__, "definitelyNotWhereYourPasswordsAreStored.json"), "wb") as f:
         f.write(b'')

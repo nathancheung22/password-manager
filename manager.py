@@ -2,9 +2,12 @@ from getpass import getpass
 import bcrypt
 from methods import *
 import json
+import os
+
+__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 try:
-    with open("password.txt", "rb") as f:
+    with open(os.path.join(__location__, "password.txt"), "rb") as f:
         masterPasswordHash = f.read()
 except FileNotFoundError:
     print("Manager not setup, please run setup.py")
@@ -21,7 +24,7 @@ while not bcrypt.checkpw(userPassword.encode(), masterPasswordHash):
 f = getFernetKey(password=userPassword)
 
 # decrypts and loads allPasswords into dict object
-with open("definitelyNotWhereYourPasswordsAreStored.json", "rb") as file:
+with open(os.path.join(__location__, "definitelyNotWhereYourPasswordsAreStored.json"), "rb") as file:
     data = file.read()
     if data == b'':
         passwordDict = {}
@@ -54,10 +57,11 @@ while selection != "q":
         --------------- MENU ---------------
     """)
 
-    selection = input("Enter your selection: ").lower()
+    selection = input("Menu selection: ").lower()
 
     try:
         options[selection](passwordDict, f)
     except KeyError:
         print("\nError: Invalid selection\n")
 
+print("\nThanks for using urvianoob's Password Manager v1.0!\n")

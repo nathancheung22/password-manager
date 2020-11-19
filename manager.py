@@ -37,6 +37,8 @@ while selection != "q":
         '2': removePassword,
         '3': changePassword,
         '4': viewPassword,
+        '5': listApps,
+        '6': copyPassword,
         'q': quit
     }
 
@@ -46,6 +48,8 @@ while selection != "q":
         2: Remove password
         3: Change password
         4: View password
+        5: List apps
+        6: Copy password
         Q: Quit
         --------------- MENU ---------------
     """)

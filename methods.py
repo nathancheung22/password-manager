@@ -6,6 +6,7 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.fernet import Fernet
 import base64
 import json
+import pyperclip
 
 
 def getAndConfirmPassword():
@@ -24,62 +25,86 @@ def updateFile(passwordDict, f):
     jsonString = json.dumps(passwordDict).encode()
     encrypted = f.encrypt(jsonString)
 
-    with open("definitelyNotPasswords.json", "wb") as file:
+    with open("definitelyNotWhereYourPasswordsAreStored.json", "wb") as file:
         file.write(encrypted)
 
 
 def addPassword(passwordDict, f):
     app = input("Enter app name: ")
-    while app in passwordDict:
-        app = input("ALREADY EXISTS! Enter app name: ")
-    
-    url = input("Enter website url: ")
-    user = input("Enter email / username: ")
-    password = getAndConfirmPassword()
 
-    passwordDict[app] = {"url": url, "user": user, "password": password}
-    updateFile(passwordDict, f)
+    if app in passwordDict:
+        print("\nError: App already exists\n")
+    else:
+        url = input("Enter website url: ")
+        user = input("Enter email / username: ")
+        password = getAndConfirmPassword()
+
+        passwordDict[app] = {"url": url, "user": user, "password": password}
+        updateFile(passwordDict, f)
 
 
 def removePassword(passwordDict, f):
     app = input("Enter app name: ")
-    while app not in passwordDict:
-        app = input("DOESN'T EXISTS! Enter app name: ")
 
-    del passwordDict[app]
-    updateFile(passwordDict, f)
+    if app in passwordDict:
+        del passwordDict[app]
+        updateFile(passwordDict, f)
+    else:
+        print("\nError: App doesn't exist\n")
 
 
 def changePassword(passwordDict, f):
     app = input("Enter app name: ")
-    while app not in passwordDict:
+
+    if app in passwordDict:
+        password = getAndConfirmPassword()
+
+        passwordDict[app]["password"] = password
+        updateFile(passwordDict, f)
+    else:
         print("\nError: App doesn't exist\n")
-        app = input("Enter app name: ")
-
-    password = getAndConfirmPassword()
-
-    passwordDict[app]["password"] = password
-    updateFile(passwordDict, f)
 
 
 def viewPassword(passwordDict, f):
     app = input("Enter app name: ")
-    while app not in passwordDict:
-        print("\nError: App doesn't exist\n")
-        app = input("Enter app name: ")
 
-    url = passwordDict[app]["url"]
-    user = passwordDict[app]["user"]
-    password = passwordDict[app]["password"]
+    if app in passwordDict:
+        url = passwordDict[app]["url"]
+        user = passwordDict[app]["user"]
+        password = passwordDict[app]["password"]
 
-    print("""
+        print("""
         ------------- DETAILS -------------
         App name   | {}
         Url        | {}
         Username   | {}
         Password   | {}
         ------------- DETAILS -------------
-    """.format(app, url, user, password))
+        """.format(app, url, user, password))
+    else:
+        print("\nError: App doesn't exist\n")
+
+
+def copyPassword(passwordDict, f):
+    app = input("Enter app name: ")
+
+    if app in passwordDict:
+        password = passwordDict[app]["password"]
+        pyperclip.copy(password)
+
+        print("\nPassword copied to clipboard\n")
+    else:
+        print("\nError: App doesn't exist\n")
+
+
+def listApps(passwordDict, f):
+    apps = "\n".join([app for app in passwordDict.keys()])
+
+    print("""
+        --------------- APPS ---------------
+        {}
+        --------------- APPS ---------------
+    """.format(apps))
 
 
 def quit(passwordDict, f):

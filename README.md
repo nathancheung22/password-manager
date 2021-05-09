@@ -7,6 +7,7 @@ Feel free to submit pull requests, especially if you see any critical errors ðŸ˜
 Run the following in order
 - `git clone https://github.com/nathancheung22/password-manager.git`
 - `cd password-manager`
+- `pip install -r requirements.txt`
 - `python setup.py`
 - `python manager.py`
 

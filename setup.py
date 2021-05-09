@@ -14,11 +14,12 @@ try:
     with open(os.path.join(__location__, "definitelyNotWhereYourPasswordsAreStored.json"), "rb") as f:
         f.read()
 
-    print("Error: you've already setup the password-manager\n")
+    print("Error: you've already setup the password manager\n")
 
 except FileNotFoundError:
     # if files not found, run the setup
     print("Welcome to the initial setup\n")
+    print("Please enter a password that's 15 characters or longer\n")
 
     password = getpass(prompt="Enter your master password: ")
     confirmPassword = getpass(prompt="Confirm your master password: ")
@@ -38,3 +39,5 @@ except FileNotFoundError:
 
     with open(os.path.join(__location__, "definitelyNotWhereYourPasswordsAreStored.json"), "wb") as f:
         f.write(b'')
+
+    print("Successfully set master password. Now run python ./manager.py to use the password manager\n")

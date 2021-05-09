@@ -3,6 +3,8 @@ import bcrypt
 from methods import *
 import json
 import os
+import sys
+
 
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
@@ -11,6 +13,7 @@ try:
         masterPasswordHash = f.read()
 except FileNotFoundError:
     print("Manager not setup, please run setup.py")
+    sys.exit(1)
 
 
 print("\nurvianoob's Password Manager v1.0\n")

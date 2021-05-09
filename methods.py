@@ -33,6 +33,8 @@ def updateFile(passwordDict, f):
 
 
 def addPassword(passwordDict, f):
+    listApps(passwordDict, f)
+
     app = input("Enter app name: ")
 
     if app in passwordDict:
@@ -47,6 +49,8 @@ def addPassword(passwordDict, f):
 
 
 def removePassword(passwordDict, f):
+    listApps(passwordDict, f)
+
     app = input("Enter app name: ")
 
     if app in passwordDict:
@@ -57,6 +61,8 @@ def removePassword(passwordDict, f):
 
 
 def changePassword(passwordDict, f):
+    listApps(passwordDict, f)
+
     app = input("Enter app name: ")
 
     if app in passwordDict:
@@ -69,6 +75,8 @@ def changePassword(passwordDict, f):
 
 
 def viewPassword(passwordDict, f):
+    listApps(passwordDict, f)
+
     app = input("Enter app name: ")
 
     if app in passwordDict:
@@ -89,6 +97,8 @@ def viewPassword(passwordDict, f):
 
 
 def copyPassword(passwordDict, f):
+    listApps(passwordDict, f)
+
     app = input("Enter app name: ")
 
     if app in passwordDict:
@@ -102,11 +112,12 @@ def copyPassword(passwordDict, f):
 
 def listApps(passwordDict, f):
     apps = "\n        ".join([app for app in passwordDict.keys()])
+    apps = "No existing apps" if len(apps) == 0 else apps
 
     print("""
-        --------------- APPS ---------------
+        --------------- EXISITING APPS ---------------
         {}
-        --------------- APPS ---------------
+        --------------- EXISITING APPS ---------------
     """.format(apps))
 
 

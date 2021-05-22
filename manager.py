@@ -4,6 +4,7 @@ from methods import *
 import json
 import os
 import sys
+from colors import cprint
 
 
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
@@ -12,15 +13,15 @@ try:
     with open(os.path.join(__location__, "password.txt"), "rb") as f:
         masterPasswordHash = f.read()
 except FileNotFoundError:
-    print("Manager not setup, please run setup.py")
+    cprint("Manager not setup, please run setup.py", "red")
     sys.exit(1)
 
 
-print("\nurvianoob's Password Manager v1.0\n")
+cprint("\nurvianoob's Password Manager v1.1\n", "header")
 userPassword = getpass(prompt="Please enter the master password: ")
 
 while not bcrypt.checkpw(userPassword.encode(), masterPasswordHash):
-    print("\nError: Incorrect password \n")
+    cprint("\nError: Incorrect password \n", "red")
     userPassword = getpass(prompt="Please enter the master password: ")
 
 # creates encryption key stuff

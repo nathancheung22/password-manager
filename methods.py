@@ -8,6 +8,7 @@ import base64
 import json
 import pyperclip
 import os
+from colors import cprint
 
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
@@ -17,7 +18,7 @@ def getAndConfirmPassword():
     password2 = getpass(prompt="Confirm password: ")
 
     while password != password2:
-        print("\nPASSWORDS DID NOT MATCH\n")
+        cprint("\nError: passwords did not match\n", "red")
         password = getpass(prompt="Enter password: ")
         password2 = getpass(prompt="Confirm password: ")
 
@@ -38,7 +39,7 @@ def addPassword(passwordDict, f):
     app = input("Enter app name: ")
 
     if app in passwordDict:
-        print("\nError: App already exists\n")
+        cprint("\nWarning: App already exists\n", "yellow")
     else:
         url = input("Enter website url: ")
         user = input("Enter email / username: ")
@@ -57,7 +58,7 @@ def removePassword(passwordDict, f):
         del passwordDict[app]
         updateFile(passwordDict, f)
     else:
-        print("\nError: App doesn't exist\n")
+        cprint("\nError: App doesn't exist\n", "red")
 
 
 def changePassword(passwordDict, f):
@@ -70,8 +71,10 @@ def changePassword(passwordDict, f):
 
         passwordDict[app]["password"] = password
         updateFile(passwordDict, f)
+
+        cprint(f"\nPassword successfully changed for {app}", "green")
     else:
-        print("\nError: App doesn't exist\n")
+        cprint("\nError: App doesn't exist\n", "red")
 
 
 def viewPassword(passwordDict, f):
@@ -93,7 +96,7 @@ def viewPassword(passwordDict, f):
         ------------- DETAILS -------------
         """.format(app, url, user, password))
     else:
-        print("\nError: App doesn't exist\n")
+        cprint("\nError: App doesn't exist\n", "red")
 
 
 def copyPassword(passwordDict, f):
@@ -105,9 +108,9 @@ def copyPassword(passwordDict, f):
         password = passwordDict[app]["password"]
         pyperclip.copy(password)
 
-        print("\nPassword copied to clipboard\n")
+        cprint("\nPassword copied to clipboard\n", "green")
     else:
-        print("\nError: App doesn't exist\n")
+        cprint("\nError: App doesn't exist\n", "red")
 
 
 def listApps(passwordDict, f):
@@ -122,7 +125,7 @@ def listApps(passwordDict, f):
 
 
 def quit(passwordDict, f):
-    print("\nThanks for using urvianoob's Password Manager v1.0!\n")
+    cprint("\nThanks for using urvianoob's Password Manager v1.1!\n", "header")
 
 
 def getFernetKey(password):

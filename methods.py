@@ -18,7 +18,7 @@ def getAndConfirmPassword():
     password2 = getpass(prompt="Confirm password: ")
 
     while password != password2:
-        cprint("\nError: passwords did not match\n", "red")
+        cprint("\nError: Passwords did not match\n", "red")
         password = getpass(prompt="Enter password: ")
         password2 = getpass(prompt="Confirm password: ")
 
